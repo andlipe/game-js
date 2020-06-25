@@ -60,6 +60,7 @@ function preload() {
   characterImage = loadImage("assets/imagens/personagem/correndo.png");
   enemyImage = loadImage("assets/imagens/inimigos/gotinha.png");
   gameMusic = loadSound("assets/sons/trilha_jogo.mp3");
+  jumpSound = loadSound("assets/sons/somPulo.mp3");
 }
 
 function setup() {
@@ -90,14 +91,22 @@ function setup() {
 function keyPressed() {
   if (key === "ArrowUp") {
     character.pula();
+    jumpSound.play();
   }
 }
 
 function draw() {
   scene.show();
   scene.move();
+
   character.show();
   character.aplicaGravidade();
+
   inimigo.show();
   inimigo.move();
+
+  if (character.estaColidindo(inimigo)) {
+    console.log("colidiu");
+    noLoop();
+  }
 }
